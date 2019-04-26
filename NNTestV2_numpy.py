@@ -14,17 +14,29 @@ path = 'dataset'
 
 files = os.listdir(path)
 
-dataset = empty((0))
+dataset = load(Path(path) / 'init.npy')
 
 
 for mfcc_file in files:
-    file = Path(path) / mfcc_file
 
+    # If it's init file, skip it
+    if mfcc_file == 'init.npy':
+        continue
+
+    # Load current file
+    file = Path(path) / mfcc_file
     array = load(file)
+
+    # Init has this dimension. If dataset shape is 1, 14; it's empty
+    s = (1, 14)
+
+    if dataset.shape == s:
+        dataset = array
+        continue
 
     dataset = vstack((dataset, array))
 
-
+print(dataset)
 #
 # x = []
 # y = []
