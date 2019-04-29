@@ -1,6 +1,6 @@
-from keras.layers import Dense, Flatten
-from keras.layers import Conv2D, MaxPooling2D, Activation, Dropout, GlobalMaxPooling2D
-from keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Activation, Dropout, GlobalMaxPooling2D
+from tensorflow.keras.models import Sequential
 from numpy import load, zeros
 from pathlib import Path
 import os
@@ -56,8 +56,22 @@ input_shape = (height, width, depth)
 
 x_train = x_train.reshape(x_train.shape[0], height, width, depth)
 x_test = x_test.reshape(x_test.shape[0], height, width, depth)
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
+y_train = y_train.reshape(y_train.shape[0] , height)
+y_test = y_test.reshape(y_test.shape[0] , height)
+
+y_train = to_categorical(y_train,2)
+print(y_train)
+
+y_test = to_categorical(y_test,2)
+print(y_test)
+print(y_train.shape)
+y_train = y_train[0:,[0],0:]
+y_train = y_train.reshape(y_train.shape[0],y_train.shape[2])
+y_test = y_test[0:,[0],0:]
+y_test = y_test.reshape(y_test.shape[0],y_test.shape[2])
+print(y_train.shape)
+print(y_test.shape)
+
 
 
 model = Sequential()
@@ -70,7 +84,7 @@ model.add(Conv2D(32, (3, 3), padding="same"))
 
 model.add(Activation("relu"))
 
-model.add(MaxPooling2D(pool_size=(3, 3)))
+model.add(MaxPooling2D(pool_size=(3, 3), padding="same"))
 
 model.add(Dropout(0.25))
 
@@ -82,7 +96,7 @@ model.add(Conv2D(64, (3, 3), padding="same"))
 
 model.add(Activation("relu"))
 
-model.add(MaxPooling2D(pool_size=(3, 3)))
+model.add(MaxPooling2D(pool_size=(3, 3), padding="same"))
 
 model.add(Dropout(0.25))
 
@@ -94,7 +108,7 @@ model.add(Conv2D(128, (3, 3), padding="same"))
 
 model.add(Activation("relu"))
 
-model.add(MaxPooling2D(pool_size=(3, 3)))
+model.add(MaxPooling2D(pool_size=(3, 3), padding="same"))
 
 model.add(Dropout(0.25))
 
@@ -112,14 +126,19 @@ model.add(Flatten())
 
 model.add(Dropout(0.5))
 
-model.add(Activation("softmax"))
+model.add( Dense(2,activation="softmax"))
 
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+model.summary()
 model.fit(x_train, y_train,
           epochs=2,
           validation_data=(x_test, y_test),
           )
 
 score = model.evaluate(x_test, y_test, verbose=0)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
+#for i in score:
+#    print(i)
+print('Test loss:', score)
+#print('Test loss:', score[0])
+#print('Test accuracy:', score[1])
 print(model.summary())
