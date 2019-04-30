@@ -3,7 +3,7 @@ from dataset import push_tag
 
 model = load_model('test_model.h5')
 
-file = 'test/1_Milkshake.npy'
+file = 'test/0_Glitch.npy'
 
 track = push_tag(file)
 
