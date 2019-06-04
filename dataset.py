@@ -4,6 +4,7 @@ import os
 from sklearn.model_selection import train_test_split
 from keras.utils import to_categorical
 
+
 def get_dataset():
     path = 'dataset_new'
 
@@ -61,14 +62,9 @@ def get_dataset():
     return x_train, x_test, y_train, y_test, input_shape
 
 
-def push_tag(file):
-    file_path = Path(file)
+def prepare_single_track(track_mfcc):
+    return track_mfcc.reshape(1, track_mfcc.shape[0], track_mfcc.shape[1], 1)
 
-    mfcc = load(file_path, allow_pickle=True)
-
-    x = mfcc[0]
-
-    return x
 
 
 get_dataset()

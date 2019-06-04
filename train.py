@@ -20,7 +20,7 @@ score = model.evaluate(x_test, y_test, verbose=0)
 
 model.save('test_model.h5')
 
-print('Test loss:', score[0])
+print('test loss:', score[0])
 print('Accuracy: ', score[1])
 
 print(x_test[0:1].shape)

@@ -31,4 +31,24 @@ def read_folder(folder_path, output_folder):
         # Save analyzed tracks
         save(output_file, arr=mfccs_tag)
 
+
+def get_mfcc_single_track(track_path, offset):
+    track_path = Path(track_path)
+
+    # Audio loading + MFCC computation
+    x, fs = librosa.load(track_path, offset=offset, duration=5)
+    mfccs = librosa.feature.mfcc(x, sr=fs, n_mfcc=13)
+
+    return mfccs
+
+
+def get_duration(track_path):
+    path = Path(track_path)
+    y, sr = librosa.load(path)
+    return librosa.get_duration(y=y, sr=sr)
+
+
+
+
+
 # read_folder('files', 'dataset_new')
