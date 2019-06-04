@@ -2,7 +2,6 @@ from tensorflow.keras.layers import Dense, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Activation, Dropout, GlobalMaxPooling2D
 from tensorflow.keras.models import Sequential
 
-
 def get_model(input_shape):
     model = Sequential()
 
