@@ -11,7 +11,7 @@ model = get_model(input_shape)
 model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
 model.fit(x_train, y_train,
-          epochs=100,
+          epochs=80,
           validation_data=(x_test, y_test),
           )
 
