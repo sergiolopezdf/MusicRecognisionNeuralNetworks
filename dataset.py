@@ -4,7 +4,6 @@ import os
 from sklearn.model_selection import train_test_split
 from keras.utils import to_categorical
 
-
 def get_dataset():
     path = 'dataset_new'
 
