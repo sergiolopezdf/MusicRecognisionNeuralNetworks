@@ -58,7 +58,7 @@ def get_model(input_shape):
     # Flatten
     model.add(Flatten())
 
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.45))
 
     # Last layer
     model.add(Dense(2, activation="softmax"))

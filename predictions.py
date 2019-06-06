@@ -1,14 +1,12 @@
-from tensorflow.keras.models import load_model
-from mfcc import get_mfcc_single_track, get_duration
+from processing import get_mfcc_single_track, get_duration, filter_one
 from dataset import prepare_single_track
 from pathlib import Path
 
-model = load_model('test_model.h5')
-file = 'test/HunterRmx.mp3'
 
+def analyze_full_track(track, model):
+    track_path = Path(track)
 
-def analyze_full_track(path):
-    duration = get_duration(Path(file))
+    duration = get_duration(track_path)
     duration = int(duration)
     min = 0
     seg = 0
@@ -16,7 +14,7 @@ def analyze_full_track(path):
     for i in range(5, duration, 5):
         offset = 60 * min + seg
 
-        mfccs = get_mfcc_single_track(file, offset)
+        mfccs = get_mfcc_single_track(track_path, offset)
 
         mfccs = prepare_single_track(mfccs)
 
@@ -29,4 +27,3 @@ def analyze_full_track(path):
         min = int(i / 60)
 
 
-analyze_full_track(file)

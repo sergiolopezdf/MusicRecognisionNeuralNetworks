@@ -5,8 +5,8 @@ from sklearn.model_selection import train_test_split
 from keras.utils import to_categorical
 
 
-def get_dataset():
-    path = 'dataset_new'
+def get_dataset(path_to_dataset):
+    path = Path(path_to_dataset)
 
     # Get files to add
     files = os.listdir(path)
@@ -64,7 +64,3 @@ def get_dataset():
 
 def prepare_single_track(track_mfcc):
     return track_mfcc.reshape(1, track_mfcc.shape[0], track_mfcc.shape[1], 1)
-
-
-
-get_dataset()
